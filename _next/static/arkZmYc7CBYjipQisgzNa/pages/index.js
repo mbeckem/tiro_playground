@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[11],{"/EDR":function(n,e,o){(window.__NEXT_P=window.__NEXT_P||[]).push(["/",function(){return o("QeBL")}])},QeBL:function(n,e,o){"use strict";o.r(e),o.d(e,"default",(function(){return w}));var t=o("q1tI"),u=o.n(t),r=o("soUV"),i=u.a.createElement;function w(){return i(r.a,null,"Hello from Index")}}},[["/EDR",0,2,1,3]]]);
