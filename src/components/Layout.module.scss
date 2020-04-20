@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    flex: 0 0 auto;
+
+    padding-bottom: 2px;
+}
+
+.content {
+    flex: 1 1 auto;
+}

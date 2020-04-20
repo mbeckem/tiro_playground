@@ -1,33 +1,38 @@
-import { Link } from "gatsby";
 import React, { memo } from "react";
+import { Navbar } from "@blueprintjs/core";
+import { Link } from "gatsby";
+
+import classNames from "classnames";
+import styles from "./Header.module.scss";
+
+function HeaderLink(props: {
+    text: string;
+    to: string;
+    className?: string;
+}): JSX.Element {
+    const { text, to } = props;
+    return (
+        <Link to={to} className={classNames(styles.pageLink, props.className)}>
+            {text}
+        </Link>
+    );
+}
 
 export const Header = memo(function Header(props: { siteTitle: string }) {
     return (
-        <header
-            style={{
-                background: "rebeccapurple",
-                marginBottom: "1.45rem",
-            }}
-        >
-            <div
-                style={{
-                    margin: "0 auto",
-                    maxWidth: 960,
-                    padding: "1.45rem 1.0875rem",
-                }}
-            >
-                <h1 style={{ margin: 0 }}>
-                    <Link
+        <Navbar className={classNames("bp3-dark", styles.header)}>
+            <Navbar.Group>
+                <Navbar.Heading>
+                    <HeaderLink
                         to="/"
-                        style={{
-                            color: "white",
-                            textDecoration: "none",
-                        }}
-                    >
-                        {props.siteTitle}
-                    </Link>
-                </h1>
-            </div>
-        </header>
+                        text={props.siteTitle}
+                        className={styles.title}
+                    />
+                </Navbar.Heading>
+                <HeaderLink to="/playground" text="Playground" />
+                <HeaderLink to="/reference" text="Reference" />
+                <HeaderLink to="/about" text="About" />
+            </Navbar.Group>
+        </Navbar>
     );
 });

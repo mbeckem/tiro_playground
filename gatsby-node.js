@@ -23,6 +23,20 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     const config = getConfig();
     const override = {
         output: getOutput(),
+
+        module: {
+            rules: [
+                {
+                    test: /.*\.wasm$/,
+                    type: "javascript/auto",
+                    loader: "file-loader",
+                    options: {
+                        name: "[contenthash].[ext]",
+                        outputPath: "static",
+                    },
+                },
+            ],
+        },
     };
     if (config.mode === "production") {
         override.devtool = false;

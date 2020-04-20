@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.split {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.textPane {
+    flex: 1 1 auto;
+    width: 0;
+}
+
+.resultPane {
+    flex: 1 1 auto;
+    width: 0;
+
+    padding: 5px;
+    overflow: auto;
+}

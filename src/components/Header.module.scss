@@ -1,0 +1,25 @@
+.header {
+    .title {
+        font-size: 1.25em;
+        font-weight: bold;
+    }
+
+    a.pageLink {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+
+        &,
+        &:active,
+        &:visited,
+        &:focus,
+        &:hover {
+            outline: none;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        &:hover {
+            filter: brightness(85%);
+        }
+    }
+}

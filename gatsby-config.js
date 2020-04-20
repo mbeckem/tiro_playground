@@ -25,14 +25,14 @@ module.exports = {
             options: {
                 aliases: {
                     "@": "src/",
-                    "@lib/": "lib/",
+                    "@lib": "lib/",
                 },
             },
         },
         {
             resolve: "gatsby-plugin-remove-console",
             options: {
-                exclude: ["error", "warn"],
+                exclude: ["error", "warn", "log", "debug"], // Log, debug: dont remove wasm output for now
             },
         },
     ],
