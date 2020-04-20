@@ -1,0 +1,8 @@
+/lib/**
+/node_modules/**
+/public/**
+
+gatsby-browser.js
+gatsby-config.js
+gatsby-node.js
+gatsby-ssrr.js

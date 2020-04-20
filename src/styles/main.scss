@@ -1,0 +1,15 @@
+@use "reset.scss";
+@use "~@blueprintjs/core/lib/scss/variables";
+
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+
+html,
+body,
+#__next {
+    height: 100%;
+    width: 100%;
+}
+
+.gutter {
+    background-color: #eee;
+}
