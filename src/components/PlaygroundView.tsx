@@ -1,9 +1,10 @@
 import React, { memo, ReactNode } from "react";
 import classNames from "classnames";
 
+import { CompilerOutput } from "./CompilerOutput";
 import { Editor } from "./Editor";
 import { CompilationResult } from "@/runtime";
-import styles from "./CompilerView.module.scss";
+import styles from "./PlaygroundView.module.scss";
 
 // Only client side import works.
 const Split = ((): any => {
@@ -40,63 +41,31 @@ const SplitLayout = memo(function SplitLayout(props: {
     );
 });
 
-const RenderResult = memo(function RenderResult(props: {
-    result: CompilationResult;
-}): JSX.Element {
-    const { result } = props;
-    const messages = result.messages.map((message, index) => {
-        return <li key={index}>{message}</li>;
-    });
-
-    return (
-        <div>
-            <div>Success: {result.success.toString()}</div>
-            <div>Time taken: {result.elapsedMillis.toFixed(3)} ms</div>
-            <div>Messages:</div>
-            <ul>{messages}</ul>
-            <pre className="monospace">{result.ast}</pre>
-            <pre className="monospace">{result.ir}</pre>
-            <pre className="monospace">{result.bytecode}</pre>
-        </div>
-    );
-});
-
-const ResultPane = memo(function ResultPane(props: {
-    compiling: boolean;
-    result?: CompilationResult;
-}): JSX.Element {
-    const { compiling, result } = props;
-
-    const statusText = compiling ? <div>Comdiviling...</div> : null;
-    const resultText = result ? <RenderResult result={result} /> : null;
-    return (
-        <div style={{ height: "100%", overflow: "auto" }}>
-            {statusText}
-            {resultText}
-        </div>
-    );
-});
-
-export interface CompilerViewProps {
+export interface PlaygroundViewProps {
     compiling: boolean;
     initialSource?: string;
     result?: CompilationResult;
     onSourceChanged: (source: string) => void;
 }
 
-export const CompilerView = memo(function CompilerView({
+export const PlaygroundView = memo(function CompilerView({
     compiling,
     initialSource,
     result,
     onSourceChanged,
-}: CompilerViewProps): JSX.Element {
+}: PlaygroundViewProps): JSX.Element {
+    function compilerOutput(): JSX.Element {
+        const state = compiling ? "pending" : result ? "done" : "empty";
+        return <CompilerOutput state={state} result={result} />;
+    }
+
     const editorPanel = (
         <Editor
             initialSource={initialSource ?? ""}
             onChange={onSourceChanged}
         />
     );
-    const compilerPanel = <ResultPane compiling={compiling} result={result} />;
+    const compilerPanel = compilerOutput();
     const runtimePanel = <div>Output...</div>;
 
     return (

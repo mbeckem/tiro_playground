@@ -1,7 +1,7 @@
 import React, { Component, PureComponent } from "react";
 
 import { CompilationResult, Runtime, createRuntime } from "@/runtime";
-import { CompilerView } from "@/components/CompilerView";
+import { PlaygroundView } from "@/components/PlaygroundView";
 
 export interface PlaygroundProps {
     initialSource?: string;
@@ -61,12 +61,12 @@ export class Playground extends PureComponent<{}, PlaygroundState> {
     render(): JSX.Element {
         const { compiling, currentSource, result } = this.state;
         return (
-            <CompilerView
+            <PlaygroundView
                 compiling={compiling}
                 initialSource={currentSource}
                 result={result}
                 onSourceChanged={this._handleSourceChanged}
-            ></CompilerView>
+            />
         );
     }
 
