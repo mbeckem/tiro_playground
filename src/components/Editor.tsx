@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+import React, { PureComponent, createRef } from "react";
+import ReactResizeDetector from "react-resize-detector";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-solarized_light";
@@ -12,43 +13,52 @@ export interface EditorProps {
     onChange: (newSource: string) => void;
 }
 
-/* 
-// Only client side import works.
-const AceEditor = ((): any => {
-    if (typeof window === "undefined") return null;
+export class Editor extends PureComponent<EditorProps> {
+    private _aceInstance = createRef<AceEditor>();
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const AceEditor = require("react-ace").default;
-    require("ace-builds/src-noconflict/theme-solarized_light");
-    require("ace-builds/src-noconflict/mode-plain_text");
-    require("ace-builds/src-noconflict/ext-language_tools");
-    return AceEditor;
-})(); */
+    private _editorSettings = {
+        mode: "plain_text",
+        theme: "solarized_light",
+        showPrintMargin: false,
+        debounceChangePeriod: 200,
+        enableBasicAutocompletion: true,
+        enableSnippets: false,
+        setOptions: {
+            showLineNumbers: true,
+            tabSize: 4,
+        },
+    };
 
-export const Editor = memo(function Editor({
-    initialSource,
-    onChange,
-}: EditorProps): JSX.Element {
-    return (
-        <div className={styles.editorContainer}>
-            <AceEditor
-                name="tiro_editor" // TODO Must be unique
-                className={styles.editor}
-                mode="plain_text"
-                theme="solarized_light"
-                onChange={onChange}
-                height="100%"
-                width="100%"
-                showPrintMargin={false}
-                debounceChangePeriod={100}
-                value={initialSource}
-                enableBasicAutocompletion={true}
-                enableSnippets={false}
-                setOptions={{
-                    showLineNumbers: true,
-                    tabSize: 4,
-                }}
-            />
-        </div>
-    );
-});
+    constructor(props: EditorProps) {
+        super(props);
+    }
+
+    render(): JSX.Element {
+        const { initialSource, onChange } = this.props;
+
+        return (
+            <div className={styles.editorContainer}>
+                <ReactResizeDetector
+                    handleHeight
+                    handleWidth
+                    onResize={this._onResize}
+                />
+                <AceEditor
+                    name="tiro_editor" // TODO Must be unique
+                    ref={this._aceInstance}
+                    className={styles.editor}
+                    onChange={onChange}
+                    height="100%"
+                    width="100%"
+                    value={initialSource}
+                    {...this._editorSettings}
+                />
+            </div>
+        );
+    }
+
+    private _onResize = (): void => {
+        const ace: any = this._aceInstance.current;
+        ace?.editor.resize();
+    };
+}
