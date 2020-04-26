@@ -60,14 +60,14 @@ function makeTab(
     title: string,
     content: JSX.Element | undefined
 ): JSX.Element {
-    const panel = <div className={styles.tabPanel}>{content}</div>;
     return (
         <Tab
             key={id}
             className={styles.tab}
+            panelClassName={styles.tabPanel}
             id={id}
             title={title}
-            panel={panel}
+            panel={content}
         />
     );
 }
