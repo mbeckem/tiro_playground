@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{QeBL:function(e,n,t){"use strict";t.r(n),t.d(n,"default",(function(){return l}));var a=t("q1tI"),r=t.n(a),u=t("soUV"),c=t("1Yd/");function l(){return r.a.createElement(u.a,null,r.a.createElement(c.a,{title:"Home"}),r.a.createElement("h1",null,"Index page (TODO)"))}}}]);
