@@ -14,7 +14,9 @@
         "init-deploy": "git worktree add gh-deploy gh-pages",
         "deploy:fresh": "rm -rf public/* gh-deploy/*",
         "deploy:push": "cd gh-deploy && git add -A && git commit --allow-empty -m \"Deploy to gh-pages.\" && git push --force",
-        "deploy": "npm run deploy:fresh && npm run build && cp -r public/* gh-deploy/ && npm run deploy:push"
+        "deploy": "npm run deploy:fresh && npm run build && cp -r public/* gh-deploy/ && npm run deploy:push",
+        "check": "tsc -noEmit",
+        "check:watch": "npm run check -- -watch"
     },
     "devDependencies": {
         "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -50,6 +52,7 @@
         "gatsby-plugin-webpack-size": "^1.0.0",
         "gatsby-source-filesystem": "^2.2.4",
         "gatsby-transformer-sharp": "^2.4.6",
+        "immutable": "^4.0.0-rc.12",
         "prettier": "2.0.4",
         "prop-types": "^15.7.2",
         "react": "^16.13.1",

@@ -28,20 +28,20 @@ class RuntimeImpl implements Runtime {
     compile(source: string): CompilationResult {
         this._checkDestroyed();
 
-        const start = new Date();
+        const start = window.performance.now();
         const input = JSON.stringify({ source });
         const output = JSON.parse(this._nativeRuntime.compile(input));
-        output.elapsedMillis = new Date().getTime() - start.getTime();
+        output.elapsedMillis = window.performance.now() - start;
         return output as CompilationResult;
     }
 
     run(functionName: string): ExecutionResult {
         this._checkDestroyed();
 
-        const start = new Date();
+        const start = window.performance.now();
         const input = JSON.stringify({ function: functionName });
         const output = JSON.parse(this._nativeRuntime.run(input));
-        output.elapsedMillis = new Date().getTime() - start.getTime();
+        output.elapsedMillis = window.performance.now() - start;
         return output as ExecutionResult;
     }
 

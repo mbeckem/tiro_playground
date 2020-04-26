@@ -1,9 +1,9 @@
 import React, { memo, ReactNode } from "react";
 import classNames from "classnames";
 
-import { CompilerOutput } from "./CompilerOutput";
+import { CompilerOutput, CompilerOutputProps } from "./CompilerOutput";
 import { Editor } from "./Editor";
-import { CompilationResult } from "@/runtime";
+import { ExecutionOutputProps, ExecutionOutput } from "./ExecutionOutput";
 import styles from "./PlaygroundView.module.scss";
 
 // Only client side import works.
@@ -42,31 +42,27 @@ const SplitLayout = memo(function SplitLayout(props: {
 });
 
 export interface PlaygroundViewProps {
-    compiling: boolean;
     initialSource?: string;
-    result?: CompilationResult;
     onSourceChanged: (source: string) => void;
+
+    compilation: CompilerOutputProps;
+    execution: ExecutionOutputProps;
 }
 
 export const PlaygroundView = memo(function CompilerView({
-    compiling,
     initialSource,
-    result,
     onSourceChanged,
+    compilation,
+    execution,
 }: PlaygroundViewProps): JSX.Element {
-    function compilerOutput(): JSX.Element {
-        const state = compiling ? "pending" : result ? "done" : "empty";
-        return <CompilerOutput state={state} result={result} />;
-    }
-
     const editorPanel = (
         <Editor
             initialSource={initialSource ?? ""}
             onChange={onSourceChanged}
         />
     );
-    const compilerPanel = compilerOutput();
-    const runtimePanel = <div>Output...</div>;
+    const compilerPanel = <CompilerOutput {...compilation} />;
+    const runtimePanel = <ExecutionOutput {...execution} />;
 
     return (
         <SplitLayout

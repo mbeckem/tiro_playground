@@ -1,41 +1,79 @@
-import React, { memo } from "react";
+import React, { memo, ReactNode } from "react";
+import { Tabs, Tab, UL } from "@blueprintjs/core";
+
 import { CompilationResult } from "@/runtime";
+import { defined } from "@/utils";
+import styles from "./CompilerOutput.module.scss";
 
-function messageTab(messages: string[] | undefined): JSX.Element {
-    const listItems = messages?.map((message, index) => {
-        return <li key={index}>{message}</li>;
-    });
-    return <ul>{listItems}</ul>;
-}
-
-function astTab(ast: string | undefined): JSX.Element {
-    return <pre className="monospace">{ast}</pre>;
-}
-
-function irTab(ir: string | undefined): JSX.Element {
-    return <pre className="monospace">{ir}</pre>;
-}
-
-function bytecodeTab(bytecode: string | undefined): JSX.Element {
-    return <pre className="monospace">{bytecode}</pre>;
-}
-
-function getStateMessage(props: CompilerOutputProps): string | undefined {
+function statusMessage(props: CompilerOutputProps): ReactNode {
     switch (props.state) {
-        case "empty":
+        case "not-compiled":
             return undefined;
-        case "pending":
+        case "compiling":
             return "Compiling...";
-        case "done": {
-            return props.result?.success
+        case "compiled": {
+            const result = defined(props.result, "props.result");
+            const elapsed = `(after ${result.elapsedMillis.toFixed(2)} ms)`;
+            const status = result.success
                 ? "Compilation succeeded"
                 : "Compilation failed";
+            return (
+                <>
+                    {status} <span>{elapsed}</span>.
+                </>
+            );
         }
     }
 }
 
+function statusContent(props: CompilerOutputProps): JSX.Element {
+    const result = props.result;
+    const messages = result?.messages;
+
+    const messageItems = messages?.map((message, index) => {
+        return <li key={index}>{message}</li>;
+    });
+    return (
+        <>
+            <div>{statusMessage(props)}</div>
+            <UL>{messageItems}</UL>
+        </>
+    );
+}
+
+function astContent(ast: string | undefined): JSX.Element | undefined {
+    return ast ? <pre>{ast}</pre> : undefined;
+}
+
+function irContent(ir: string | undefined): JSX.Element | undefined {
+    return ir ? <pre>{ir}</pre> : undefined;
+}
+
+function bytecodeContent(
+    bytecode: string | undefined
+): JSX.Element | undefined {
+    return bytecode ? <pre>{bytecode}</pre> : undefined;
+}
+
+function makeTab(
+    id: string,
+    title: string,
+    content: JSX.Element | undefined
+): JSX.Element {
+    const panel = <div className={styles.tabPanel}>{content}</div>;
+    return (
+        <Tab
+            key={id}
+            className={styles.tab}
+            id={id}
+            title={title}
+            panel={panel}
+        />
+    );
+}
+
 export interface CompilerOutputProps {
-    state: "empty" | "pending" | "done";
+    state: "not-compiled" | "compiling" | "compiled";
     result?: CompilationResult;
 }
 
@@ -44,23 +82,36 @@ export const CompilerOutput = memo(function CompilerOutput(
 ): JSX.Element {
     const result = props.result;
 
-    const status = getStateMessage(props);
-    const elapsed = result
-        ? `${result.elapsedMillis.toFixed(3)} ms`
-        : undefined;
-    const messages = messageTab(result?.messages);
-    const ast = astTab(result?.ast);
-    const ir = irTab(result?.ir);
-    const bytecode = bytecodeTab(result?.bytecode);
+    const tabs = [
+        {
+            id: "status",
+            title: "Status",
+            content: statusContent(props),
+        },
+        {
+            id: "ast",
+            title: "Abstract Syntax Tree",
+            content: astContent(result?.ast.trim()),
+        },
+        {
+            id: "ir",
+            title: "Intermediate Repr.",
+            content: irContent(result?.ir.trim()),
+        },
+        {
+            id: "bytecode",
+            title: "Bytecode",
+            content: bytecodeContent(result?.bytecode.trim()),
+        },
+    ];
 
     return (
-        <div>
-            <div>Status: {status}</div>
-            <div>Elapsed: {elapsed}</div>
-            {messages}
-            {ast}
-            {ir}
-            {bytecode}
-        </div>
+        <Tabs
+            className={styles.tabsContainer}
+            id="compilerOutput"
+            defaultSelectedTabId={tabs[0].id}
+        >
+            {tabs.map((props) => makeTab(props.id, props.title, props.content))}
+        </Tabs>
     );
 });

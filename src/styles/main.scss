@@ -17,4 +17,8 @@ body,
     &.gutter-horizontal {
         cursor: ew-resize;
     }
+
+    &.gutter-vertical {
+        cursor: ns-resize;
+    }
 }

@@ -1,7 +1,16 @@
 import React, { Component, PureComponent } from "react";
+import { List } from "immutable";
 
-import { CompilationResult, Runtime, createRuntime } from "@/runtime";
+import {
+    CompilationResult,
+    Runtime,
+    createRuntime,
+    ExecutionResult,
+} from "@/runtime";
 import { PlaygroundView } from "@/components/PlaygroundView";
+import { defined } from "@/utils";
+import { CompilerOutputProps } from "./CompilerOutput";
+import { ExecutionOutputProps } from "./ExecutionOutput";
 
 export interface PlaygroundProps {
     initialSource?: string;
@@ -10,7 +19,8 @@ export interface PlaygroundProps {
 interface PlaygroundState {
     compiling: boolean;
     currentSource: string;
-    result?: CompilationResult;
+    compiled?: CompilationResult;
+    executions: List<ExecutionResult>;
 }
 
 export class Playground extends PureComponent<{}, PlaygroundState> {
@@ -21,21 +31,19 @@ export class Playground extends PureComponent<{}, PlaygroundState> {
         this.state = {
             compiling: false,
             currentSource: props.initialSource ?? "",
+            executions: List(),
         };
     }
 
     async componentDidMount(): Promise<void> {
-        let runtime;
         try {
-            runtime = await createRuntime();
+            this._runtime = await createRuntime();
+            this._startCompilation(this.state.currentSource);
         } catch (e) {
             // TODO error UI
             console.error("Failed to create runtime instance", e);
             return;
         }
-
-        this._runtime = runtime;
-        this._startCompilation(this.state.currentSource);
     }
 
     componentWillUnmount(): void {
@@ -44,14 +52,13 @@ export class Playground extends PureComponent<{}, PlaygroundState> {
     }
 
     private async _startCompilation(source: string): Promise<void> {
+        const runtime = defined(this._runtime, "runtime");
+
         // TODO: Async compilation api (Web worker?)
         try {
             await asyncSetState(this, { compiling: true });
-            const result = this._runtime?.compile(source);
-            this.setState({ compiling: false, result });
-
-            const exec = this._runtime?.run("main");
-            console.debug(exec);
+            const result = runtime.compile(source);
+            this.setState({ compiling: false, compiled: result });
         } catch (e) {
             // TODO: Error state in UI
             console.error("Compilation failed", e);
@@ -59,13 +66,30 @@ export class Playground extends PureComponent<{}, PlaygroundState> {
     }
 
     render(): JSX.Element {
-        const { compiling, currentSource, result } = this.state;
+        const { compiling, currentSource, compiled, executions } = this.state;
+
+        const compilationOutput: CompilerOutputProps = {
+            state: compiling
+                ? "compiling"
+                : compiled
+                ? "compiled"
+                : "not-compiled",
+            result: compiled,
+        };
+
+        const executionOutput: ExecutionOutputProps = {
+            results: executions,
+            runEnabled: !!compiled?.success,
+            onRunClick: this._handleRunClick,
+            onClearClick: this._handleClearResultsClick,
+        };
+
         return (
             <PlaygroundView
-                compiling={compiling}
                 initialSource={currentSource}
-                result={result}
                 onSourceChanged={this._handleSourceChanged}
+                compilation={compilationOutput}
+                execution={executionOutput}
             />
         );
     }
@@ -73,6 +97,26 @@ export class Playground extends PureComponent<{}, PlaygroundState> {
     private _handleSourceChanged = async (value: string): Promise<void> => {
         await asyncSetState(this, { currentSource: value });
         this._startCompilation(value);
+    };
+
+    private _handleRunClick = (): void => {
+        const runtime = defined(this._runtime, "runtime");
+        try {
+            const exec = runtime.run("main");
+            this.setState((state) => {
+                return { executions: state.executions.push(exec) };
+            });
+            console.debug("Execution result:", exec);
+        } catch (e) {
+            // TODO: Error state in UI
+            console.error("Execution failed", e);
+        }
+    };
+
+    private _handleClearResultsClick = (): void => {
+        this.setState({
+            executions: List(),
+        });
     };
 }
 
