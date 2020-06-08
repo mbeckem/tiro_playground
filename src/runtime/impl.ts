@@ -7,8 +7,8 @@ export async function createRuntime(): Promise<Runtime> {
         throw new Error("Cannot compile server side.");
     }
 
-    const { nativeTiro } = await loadTiro();
-    const runtime = new nativeTiro.TiroRuntime();
+    const tiroModule = await loadTiro();
+    const runtime = new tiroModule.TiroRuntime();
     return new RuntimeImpl(runtime);
 }
 
@@ -51,40 +51,26 @@ class RuntimeImpl implements Runtime {
     }
 }
 
-type TiroPromise = Promise<{ nativeTiro: any }>;
-
 const loadTiro = (() => {
     // Lazily loaded once on demand.
-    let tiroWasm: TiroPromise | undefined = undefined;
+    let tiroWasm: Promise<any> | undefined = undefined;
 
-    function loadModule(): TiroPromise {
-        return new Promise((resolve, reject) => {
-            const instance = nativeTiro({
-                noInitialRun: true,
-                noExitRuntime: true,
-                locateFile(file: any) {
-                    if (file === "tiro.wasm") {
-                        return nativeTiroWasmURL;
-                    }
-                    throw new Error(
-                        `Unknown file requested by WebAssembly module: '${file}'.`
-                    );
-                },
-                onAbort() {
-                    reject("Native tiro module aborted.");
-                },
-                onRuntimeInitialized() {
-                    // Must not resolve with the instance itself. It has a "then" function
-                    // but is *NOT* a promise (-> infinite loop).
-                    resolve({
-                        nativeTiro: instance,
-                    });
-                },
-            });
+    function loadModule(): Promise<any> {
+        return nativeTiro({
+            noInitialRun: true,
+            noExitRuntime: true,
+            locateFile(file: any) {
+                if (file === "tiro.wasm") {
+                    return nativeTiroWasmURL;
+                }
+                throw new Error(
+                    `Unknown file requested by WebAssembly module: '${file}'.`
+                );
+            },
         });
     }
 
-    return function loadTiro(): TiroPromise {
+    return function loadTiro(): Promise<any> {
         if (!tiroWasm) {
             tiroWasm = loadModule();
         }
