@@ -6,7 +6,7 @@ import { SEO } from "@/components/SEO";
 const INITIAL_SOURCE = `
 import std;
 
-func main() {
+export func main() {
     const object = "World";
     std.print("Hello \${object}!");
 }
