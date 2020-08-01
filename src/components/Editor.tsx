@@ -19,6 +19,7 @@ export class Editor extends PureComponent<EditorProps> {
     private _editorSettings = {
         mode: "plain_text",
         theme: "solarized_light",
+        fontSize: "16px",
         showPrintMargin: false,
         debounceChangePeriod: 200,
         enableBasicAutocompletion: true,

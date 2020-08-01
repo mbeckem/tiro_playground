@@ -13,10 +13,10 @@ const Result = memo(function Result(props: {
 
     const title = result.success
         ? `Function returned ${result.value} (after ${elapsed}).`
-        : `Execution failed (after {elapsed}).`;
+        : `Execution failed (after ${elapsed}).`;
 
     const error = result.success ? undefined : (
-        <div className={styles.error}>{result.error || "Unknown error"}.</div>
+        <div className={styles.error}>{result.error || "Unknown error"}</div>
     );
 
     return (
