@@ -3,6 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
+const path = require("path");
 const merge = require("webpack-merge");
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
@@ -10,12 +11,12 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         switch (stage) {
             case `develop`:
                 return {
-                    filename: `[id].js`,
+                    filename: `[id].js`
                 };
             case `build-javascript`:
                 return {
                     filename: `[contenthash].js`,
-                    chunkFilename: `[contenthash].js`,
+                    chunkFilename: `[contenthash].js`
                 };
         }
     }
@@ -32,15 +33,46 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
                     loader: "file-loader",
                     options: {
                         name: "[contenthash].[ext]",
-                        outputPath: "static",
-                    },
-                },
-            ],
-        },
+                        outputPath: "static"
+                    }
+                }
+            ]
+        }
     };
     if (config.mode === "production") {
         override.devtool = false;
     }
 
     actions.replaceWebpackConfig(merge(config, override));
+};
+
+exports.createPages = async ({ graphql, actions }) => {
+    const { createPage } = actions;
+    const result = await graphql(`
+        query {
+            allFile(filter: { sourceInstanceName: { eq: "docs" } }) {
+                nodes {
+                    childMdx {
+                        id
+                        slug
+                        frontmatter {
+                            slug
+                        }
+                    }
+                }
+            }
+        }
+    `);
+    const template = path.resolve("./src/templates/DocsArticle.tsx");
+    for (const node of result.data.allFile.nodes) {
+        const { id } = node.childMdx;
+        const { slug } = node.childMdx.frontmatter;
+        createPage({
+            path: path.posix.join("/docs/", slug),
+            component: template,
+            context: {
+                id
+            }
+        });
+    }
 };

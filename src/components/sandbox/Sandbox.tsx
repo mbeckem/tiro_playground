@@ -5,7 +5,7 @@ import {
     CompilationResult,
     Runtime,
     createRuntime,
-    ExecutionResult,
+    ExecutionResult
 } from "@/runtime";
 import { defined } from "@/utils";
 import { SandboxUI } from "./SandboxUI";
@@ -31,7 +31,7 @@ export class Sandbox extends PureComponent<{}, SandboxState> {
         this.state = {
             compiling: false,
             currentSource: props.initialSource ?? "",
-            executions: List(),
+            executions: List()
         };
     }
 
@@ -74,14 +74,14 @@ export class Sandbox extends PureComponent<{}, SandboxState> {
                 : compiled
                 ? "compiled"
                 : "not-compiled",
-            result: compiled,
+            result: compiled
         };
 
         const executionOutput: ExecutionOutputProps = {
             results: executions,
             runEnabled: !!compiled?.success,
             onRunClick: this._handleRunClick,
-            onClearClick: this._handleClearResultsClick,
+            onClearClick: this._handleClearResultsClick
         };
 
         return (
@@ -115,7 +115,7 @@ export class Sandbox extends PureComponent<{}, SandboxState> {
 
     private _handleClearResultsClick = (): void => {
         this.setState({
-            executions: List(),
+            executions: List()
         });
     };
 }

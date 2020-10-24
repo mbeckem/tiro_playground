@@ -6,18 +6,26 @@ module.exports = {
     siteMetadata: {
         title: "tiro",
         description: "The tiro programming language.",
-        author: "Michael Beckemeyer",
+        author: "Michael Beckemeyer"
     },
     plugins: [
         "gatsby-plugin-react-helmet",
         "gatsby-transformer-sharp",
+        "gatsby-plugin-mdx",
+        {
+            resolve: "gatsby-source-filesystem",
+            options: {
+                name: "docs",
+                path: `${__dirname}/docs/`
+            }
+        },
         "gatsby-plugin-sharp",
         "gatsby-plugin-typescript",
         {
             resolve: "gatsby-plugin-sass",
             options: {
-                implementation: require("sass"),
-            },
+                implementation: require("sass")
+            }
         },
         "gatsby-plugin-webpack-size",
         {
@@ -25,15 +33,15 @@ module.exports = {
             options: {
                 aliases: {
                     "@": "src/",
-                    "@lib": "lib/",
-                },
-            },
+                    "@lib": "lib/"
+                }
+            }
         },
         {
             resolve: "gatsby-plugin-remove-console",
             options: {
-                exclude: ["error", "warn", "log", "debug"], // Log, debug: dont remove wasm output for now
-            },
-        },
-    ],
+                exclude: ["error", "warn", "log", "debug"] // Log, debug: dont remove wasm output for now
+            }
+        }
+    ]
 };

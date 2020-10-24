@@ -11,7 +11,7 @@ export interface LayoutProps {
 
 export const Layout = memo(function Layout({
     scrollContent,
-    children,
+    children
 }: LayoutProps): JSX.Element {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {

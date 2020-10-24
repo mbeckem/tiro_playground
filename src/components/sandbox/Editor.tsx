@@ -26,8 +26,8 @@ export class Editor extends PureComponent<EditorProps> {
         enableSnippets: false,
         setOptions: {
             showLineNumbers: true,
-            tabSize: 4,
-        },
+            tabSize: 4
+        }
     };
 
     constructor(props: EditorProps) {

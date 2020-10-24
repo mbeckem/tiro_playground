@@ -53,7 +53,7 @@ export const SandboxUI = memo(function CompilerView({
     initialSource,
     onSourceChanged,
     compilation,
-    execution,
+    execution
 }: SandboxUIProps): JSX.Element {
     const editorPanel = (
         <Editor

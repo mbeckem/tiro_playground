@@ -86,23 +86,23 @@ export const CompilerOutput = memo(function CompilerOutput(
         {
             id: "status",
             title: "Status",
-            content: statusContent(props),
+            content: statusContent(props)
         },
         {
             id: "ast",
             title: "Abstract Syntax Tree",
-            content: astContent(result?.ast.trim()),
+            content: astContent(result?.ast.trim())
         },
         {
             id: "ir",
             title: "Intermediate Repr.",
-            content: irContent(result?.ir.trim()),
+            content: irContent(result?.ir.trim())
         },
         {
             id: "bytecode",
             title: "Bytecode",
-            content: bytecodeContent(result?.bytecode.trim()),
-        },
+            content: bytecodeContent(result?.bytecode.trim())
+        }
     ];
 
     return (

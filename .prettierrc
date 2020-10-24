@@ -1,4 +1,6 @@
 {
     "singleQuote": false,
-    "editorconfig": true
+    "semi": true,
+    "trailingComma": "none",
+    "quoteProps": "consistent"
 }

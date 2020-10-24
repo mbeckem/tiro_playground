@@ -15,7 +15,7 @@ export func main() {
 const LazyPlayground: any = lazy(async () => {
     return {
         // React.lazy needs us to return a "default" export.
-        default: (await import("@/components/sandbox")).Sandbox,
+        default: (await import("@/components/sandbox")).Sandbox
     };
 });
 

@@ -30,7 +30,7 @@ export const Header = memo(function Header(props: { siteTitle: string }) {
                     />
                 </Navbar.Heading>
                 <HeaderLink to="/sandbox" text="Sandbox" />
-                <HeaderLink to="/reference" text="Reference" />
+                <HeaderLink to="/docs/stdlib" text="Reference" />
                 <HeaderLink to="/about" text="About" />
             </Navbar.Group>
         </Navbar>

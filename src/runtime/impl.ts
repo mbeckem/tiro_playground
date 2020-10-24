@@ -66,7 +66,7 @@ const loadTiro = (() => {
                 throw new Error(
                     `Unknown file requested by WebAssembly module: '${file}'.`
                 );
-            },
+            }
         });
     }
 
