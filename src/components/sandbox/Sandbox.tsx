@@ -7,26 +7,26 @@ import {
     createRuntime,
     ExecutionResult,
 } from "@/runtime";
-import { PlaygroundView } from "@/components/PlaygroundView";
 import { defined } from "@/utils";
+import { SandboxUI } from "./SandboxUI";
 import { CompilerOutputProps } from "./CompilerOutput";
 import { ExecutionOutputProps } from "./ExecutionOutput";
 
-export interface PlaygroundProps {
+export interface SandboxProps {
     initialSource?: string;
 }
 
-interface PlaygroundState {
+interface SandboxState {
     compiling: boolean;
     currentSource: string;
     compiled?: CompilationResult;
     executions: List<ExecutionResult>;
 }
 
-export class Playground extends PureComponent<{}, PlaygroundState> {
+export class Sandbox extends PureComponent<{}, SandboxState> {
     private _runtime?: Runtime;
 
-    constructor(props: Readonly<PlaygroundProps>) {
+    constructor(props: Readonly<SandboxProps>) {
         super(props);
         this.state = {
             compiling: false,
@@ -85,7 +85,7 @@ export class Playground extends PureComponent<{}, PlaygroundState> {
         };
 
         return (
-            <PlaygroundView
+            <SandboxUI
                 initialSource={currentSource}
                 onSourceChanged={this._handleSourceChanged}
                 compilation={compilationOutput}

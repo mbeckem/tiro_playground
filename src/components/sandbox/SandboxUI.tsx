@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { CompilerOutput, CompilerOutputProps } from "./CompilerOutput";
 import { Editor } from "./Editor";
 import { ExecutionOutputProps, ExecutionOutput } from "./ExecutionOutput";
-import styles from "./PlaygroundView.module.scss";
+import styles from "./SandboxUI.module.scss";
 
 // Only client side import works.
 const Split = ((): any => {
@@ -41,7 +41,7 @@ const SplitLayout = memo(function SplitLayout(props: {
     );
 });
 
-export interface PlaygroundViewProps {
+export interface SandboxUIProps {
     initialSource?: string;
     onSourceChanged: (source: string) => void;
 
@@ -49,12 +49,12 @@ export interface PlaygroundViewProps {
     execution: ExecutionOutputProps;
 }
 
-export const PlaygroundView = memo(function CompilerView({
+export const SandboxUI = memo(function CompilerView({
     initialSource,
     onSourceChanged,
     compilation,
     execution,
-}: PlaygroundViewProps): JSX.Element {
+}: SandboxUIProps): JSX.Element {
     const editorPanel = (
         <Editor
             initialSource={initialSource ?? ""}
