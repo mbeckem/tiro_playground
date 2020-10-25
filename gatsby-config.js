@@ -19,6 +19,13 @@ module.exports = {
                 path: `${__dirname}/docs/`
             }
         },
+        {
+            resolve: "gatsby-source-filesystem",
+            options: {
+                name: "apidocs",
+                path: `${__dirname}/apidocs/compiled`
+            }
+        },
         "gatsby-plugin-sharp",
         "gatsby-plugin-typescript",
         {

@@ -42,6 +42,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # -- Breathe settings (C++ API docs)
 
+# TODO: Make path configurable
 breathe_projects = {"tiro": "/home/michael/projects/tiro/build/apidoc/xml"}
 
 breathe_domain_by_extension = {
