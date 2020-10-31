@@ -40,6 +40,7 @@ module.exports = {
             {
                 allowExpressions: true
             }
-        ]
+        ],
+        "react/prop-types": "off"
     }
 };

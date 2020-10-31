@@ -6,7 +6,6 @@
 const path = require("path");
 const merge = require("webpack-merge");
 const fs = require("fs");
-const { relative } = require("path");
 
 const { readFile } = fs.promises;
 
@@ -63,7 +62,7 @@ async function createApiDocs(graphql, actions) {
     const template = path.resolve("./src/templates/ApiDocsArticle.tsx");
     for (const node of result.data.allFile.nodes) {
         const { relativePath, absolutePath } = node;
-        if (!relativePath.match(/^tiro\/.*\.fjson$/)) {
+        if (!relativePath.match(/^tiro(pp)?\/.*\.fjson$/)) {
             continue;
         }
 

@@ -29,7 +29,7 @@ export default function PlaygroundPage(): JSX.Element {
     ) : null;
 
     return (
-        <Layout scrollContent>
+        <Layout fullHeight>
             <SEO title="Playground" />
             {content}
         </Layout>
