@@ -9,6 +9,7 @@ module.exports = {
         author: "Michael Beckemeyer"
     },
     plugins: [
+        "gatsby-plugin-catch-links",
         "gatsby-plugin-react-helmet",
         "gatsby-transformer-sharp",
         "gatsby-plugin-mdx",
