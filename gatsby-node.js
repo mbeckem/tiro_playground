@@ -6,6 +6,8 @@
 const path = require("path");
 const merge = require("webpack-merge");
 const fs = require("fs");
+const parse5 = require("parse5");
+const hastFromParse5 = require("hast-util-from-parse5");
 
 const { readFile } = fs.promises;
 
@@ -46,8 +48,8 @@ async function createApiDocs(graphql, actions) {
         query {
             allFile(
                 filter: {
-                    extension: { eq: "fjson" }
-                    sourceInstanceName: { eq: "apidocs" }
+                    extension: { eq: "html" }
+                    sourceInstanceName: { eq: "doxygen-embed" }
                 }
             ) {
                 nodes {
@@ -59,21 +61,19 @@ async function createApiDocs(graphql, actions) {
         }
     `);
 
-    const template = path.resolve("./src/templates/ApiDocsArticle.tsx");
+    const template = path.resolve("./src/templates/DoxygenArticle.tsx");
     for (const node of result.data.allFile.nodes) {
+        // TODO: Transport page title via html fragment (embed json or sth)
         const { relativePath, absolutePath } = node;
-        if (!relativePath.match(/^tiro(pp)?\/.*\.fjson$/)) {
-            continue;
-        }
+        const { dir, name, base } = path.posix.parse(relativePath);
+        const rawHtml = await readFile(absolutePath, { encoding: "utf-8" });
 
-        const { dir, name } = path.posix.parse(relativePath);
-        const { title, body } = JSON.parse(await readFile(absolutePath));
         createPage({
-            path: path.posix.join("/apidocs", dir, name),
+            path: path.posix.join("/apidocs", dir, base),
             component: template,
             context: {
-                title,
-                body
+                title: name,
+                rawHtml: rawHtml
             }
         });
     }

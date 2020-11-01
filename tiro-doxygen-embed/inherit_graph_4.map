@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title="STL class." alt="" coords="5,56,84,83"/>
+<area shape="rect" id="node2" href="$classtiro_1_1error.html" title="Base class for all errors thrown by this library." alt="" coords="132,56,180,83"/>
+<area shape="rect" id="node3" href="$classtiro_1_1api__error.html" title="Represents an error thrown by the tiro c library." alt="" coords="252,5,324,32"/>
+<area shape="rect" id="node4" href="$classtiro_1_1bad__handle__cast.html" title="Thrown when an invalid cast is attempted." alt="" coords="228,56,348,83"/>
+<area shape="rect" id="node5" href="$classtiro_1_1generic__error.html" title="Generic error with a simple message." alt="" coords="239,107,337,133"/>
+<area shape="rect" id="node6" href="$classtiro_1_1bad__handle__check.html" title="Thrown when a debug mode handle check failed." alt="" coords="396,107,527,133"/>
+</map>

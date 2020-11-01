@@ -22,8 +22,8 @@ module.exports = {
         {
             resolve: "gatsby-source-filesystem",
             options: {
-                name: "apidocs",
-                path: `${__dirname}/apidocs/compiled`
+                name: "doxygen-embed",
+                path: `${__dirname}/tiro-doxygen-embed`
             }
         },
         "gatsby-plugin-sharp",

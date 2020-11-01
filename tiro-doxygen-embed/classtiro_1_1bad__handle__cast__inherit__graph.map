@@ -1,0 +1,5 @@
+<map id="bad_handle_cast" name="bad_handle_cast">
+<area shape="rect" id="node1" title="Thrown when an invalid cast is attempted." alt="" coords="5,155,125,181"/>
+<area shape="rect" id="node2" href="$classtiro_1_1error.html" title="Base class for all errors thrown by this library." alt="" coords="41,80,89,107"/>
+<area shape="rect" id="node3" title="STL class." alt="" coords="26,5,105,32"/>
+</map>

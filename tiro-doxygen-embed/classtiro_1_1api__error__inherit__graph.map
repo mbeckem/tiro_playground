@@ -1,0 +1,5 @@
+<map id="api_error" name="api_error">
+<area shape="rect" id="node1" title="Represents an error thrown by the tiro c library." alt="" coords="9,155,81,181"/>
+<area shape="rect" id="node2" href="$classtiro_1_1error.html" title="Base class for all errors thrown by this library." alt="" coords="21,80,69,107"/>
+<area shape="rect" id="node3" title="STL class." alt="" coords="5,5,84,32"/>
+</map>

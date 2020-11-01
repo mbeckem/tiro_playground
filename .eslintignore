@@ -5,4 +5,4 @@
 gatsby-browser.js
 gatsby-config.js
 gatsby-node.js
-gatsby-ssrr.js
+gatsby-ssr.js

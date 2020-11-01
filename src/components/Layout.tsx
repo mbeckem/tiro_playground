@@ -2,6 +2,7 @@ import React, { memo, ReactNode } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import classNames from "classnames";
 import { Header } from "./Header";
+
 import styles from "./Layout.module.scss";
 
 export interface LayoutProps {
