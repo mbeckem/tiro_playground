@@ -5,14 +5,15 @@ import styles from "./DoxygenRenderer.module.scss";
 import { Container } from "./Container";
 import { LoadScript, ScriptId } from "./LoadScript";
 import { apidocsFile } from "@/routes";
+import { withPrefix } from "gatsby";
 
 const jqueryScript = new ScriptId(
     "doxygen-support-jquery",
-    apidocsFile("jquery.js")
+    withPrefix(apidocsFile("jquery.js"))
 );
 const dynsectionsScript = new ScriptId(
     "doxygen-support-dynsections",
-    apidocsFile("dynsections.js")
+    withPrefix(apidocsFile("dynsections.js"))
 );
 
 export interface DoxygenRendererProps {
