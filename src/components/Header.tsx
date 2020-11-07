@@ -1,8 +1,9 @@
 import React, { memo } from "react";
 import { Navbar } from "@blueprintjs/core";
 import { Link } from "gatsby";
-
 import classNames from "classnames";
+
+import * as routes from "@/routes";
 import styles from "./Header.module.scss";
 
 function HeaderLink(props: {
@@ -24,14 +25,14 @@ export const Header = memo(function Header(props: { siteTitle: string }) {
             <Navbar.Group>
                 <Navbar.Heading>
                     <HeaderLink
-                        to="/"
+                        to={routes.index()}
                         text={props.siteTitle}
                         className={styles.title}
                     />
                 </Navbar.Heading>
-                <HeaderLink to="/sandbox" text="Sandbox" />
-                <HeaderLink to="/docs/stdlib" text="Reference" />
-                <HeaderLink to="/about" text="About" />
+                <HeaderLink to={routes.docs()} text="Documentation" />
+                <HeaderLink to={routes.sandbox()} text="Sandbox" />
+                <HeaderLink to={routes.about()} text="About" />
             </Navbar.Group>
         </Navbar>
     );

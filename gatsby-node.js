@@ -3,11 +3,32 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
+require("@babel/register")({
+    extensions: [".js", ".ts", ".tsx", ".jsx"],
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                targets: {
+                    node: 12
+                },
+                modules: "commonjs",
+                loose: true
+            }
+        ],
+        [
+            require.resolve("@babel/preset-typescript"),
+            {
+                isTSX: true,
+                allExtensions: true
+            }
+        ]
+    ]
+});
 const path = require("path");
 const merge = require("webpack-merge");
 const fs = require("fs");
-const parse5 = require("parse5");
-const hastFromParse5 = require("hast-util-from-parse5");
+const routes = require("./src/routes/index.ts");
 
 const { readFile } = fs.promises;
 
@@ -65,11 +86,11 @@ async function createApiDocs(graphql, actions) {
     for (const node of result.data.allFile.nodes) {
         // TODO: Transport page title via html fragment (embed json or sth)
         const { relativePath, absolutePath } = node;
-        const { dir, name, base } = path.posix.parse(relativePath);
+        const { name, base } = path.posix.parse(relativePath);
         const rawHtml = await readFile(absolutePath, { encoding: "utf-8" });
 
         createPage({
-            path: path.posix.join("/apidocs", dir, base),
+            path: routes.apidoc(base),
             component: template,
             context: {
                 title: name,

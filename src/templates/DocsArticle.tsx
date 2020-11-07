@@ -1,10 +1,12 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { Layout } from "@/components/Layout";
 
-const shortcodes = {};
+const shortcodes = {
+    Link
+};
 
 export default function DocsArticle({ data: { mdx } }: any): JSX.Element {
     return (

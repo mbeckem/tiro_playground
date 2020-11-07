@@ -22,8 +22,12 @@
         "prettier": "prettier \"./{src,docs}/**/*.{ts,tsx}\" --write"
     },
     "devDependencies": {
+        "@babel/core": "^7.12.3",
         "@babel/plugin-proposal-class-properties": "^7.12.1",
         "@babel/plugin-syntax-import-meta": "^7.10.4",
+        "@babel/preset-env": "^7.12.1",
+        "@babel/preset-typescript": "^7.12.1",
+        "@babel/register": "^7.12.1",
         "@blueprintjs/core": "^3.35.0",
         "@loadable/component": "^5.14.1",
         "@mdx-js/mdx": "^1.6.19",
