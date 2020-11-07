@@ -29,76 +29,9 @@ const path = require("path");
 const merge = require("webpack-merge");
 const fs = require("fs");
 const routes = require("./src/routes/index.ts");
+const glob = require("fast-glob");
 
-const { readFile } = fs.promises;
-
-async function createMdxDocs(graphql, actions) {
-    const { createPage } = actions;
-    const result = await graphql(`
-        query {
-            allFile(filter: { sourceInstanceName: { eq: "docs" } }) {
-                nodes {
-                    childMdx {
-                        id
-                        slug
-                        frontmatter {
-                            slug
-                        }
-                    }
-                }
-            }
-        }
-    `);
-    const template = path.resolve("./src/templates/DocsArticle.tsx");
-    for (const node of result.data.allFile.nodes) {
-        const { id } = node.childMdx;
-        const { slug } = node.childMdx.frontmatter;
-        createPage({
-            path: path.posix.join("/docs/", slug),
-            component: template,
-            context: {
-                id
-            }
-        });
-    }
-}
-
-async function createApiDocs(graphql, actions) {
-    const { createPage } = actions;
-    const result = await graphql(`
-        query {
-            allFile(
-                filter: {
-                    extension: { eq: "html" }
-                    sourceInstanceName: { eq: "doxygen-embed" }
-                }
-            ) {
-                nodes {
-                    id
-                    relativePath
-                    absolutePath
-                }
-            }
-        }
-    `);
-
-    const template = path.resolve("./src/templates/DoxygenArticle.tsx");
-    for (const node of result.data.allFile.nodes) {
-        // TODO: Transport page title via html fragment (embed json or sth)
-        const { relativePath, absolutePath } = node;
-        const { name, base } = path.posix.parse(relativePath);
-        const rawHtml = await readFile(absolutePath, { encoding: "utf-8" });
-
-        createPage({
-            path: routes.apidoc(base),
-            component: template,
-            context: {
-                title: name,
-                rawHtml: rawHtml
-            }
-        });
-    }
-}
+const { readFile, copyFile, mkdir } = fs.promises;
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     function getOutput() {
@@ -139,6 +72,90 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
 
     actions.replaceWebpackConfig(merge(config, override));
 };
+
+async function createMdxDocs(graphql, actions) {
+    const { createPage } = actions;
+    const result = await graphql(`
+        query {
+            allFile(filter: { sourceInstanceName: { eq: "docs" } }) {
+                nodes {
+                    childMdx {
+                        id
+                        slug
+                        frontmatter {
+                            slug
+                        }
+                    }
+                }
+            }
+        }
+    `);
+    const template = path.resolve("./src/templates/DocsArticle.tsx");
+    for (const node of result.data.allFile.nodes) {
+        const { id } = node.childMdx;
+        const { slug } = node.childMdx.frontmatter;
+        createPage({
+            path: path.posix.join("/docs/", slug),
+            component: template,
+            context: {
+                id
+            }
+        });
+    }
+}
+
+async function createApiDocs(graphql, actions) {
+    const { createPage } = actions;
+    const doxygenFiles = await graphql(`
+        query {
+            allFile(
+                filter: {
+                    extension: { eq: "html" }
+                    sourceInstanceName: { eq: "doxygen-embed" }
+                }
+            ) {
+                nodes {
+                    id
+                    relativePath
+                    absolutePath
+                }
+            }
+        }
+    `);
+
+    // Create real gatsby pages with the embedded html content from the doxygen output
+    const template = path.resolve("./src/templates/DoxygenArticle.tsx");
+    const createDoxgenPage = async (node) => {
+        // TODO: Transport page title via html fragment (embed json or sth)
+        const { relativePath, absolutePath } = node;
+        const { name, base } = path.posix.parse(relativePath);
+        const rawHtml = await readFile(absolutePath, { encoding: "utf-8" });
+
+        createPage({
+            path: routes.apidocsFile(base),
+            component: template,
+            context: {
+                title: name,
+                rawHtml: rawHtml
+            }
+        });
+    };
+    await Promise.all(doxygenFiles.data.allFile.nodes.map(createDoxgenPage));
+
+    // Copy static resources needed by the doxygen pages.
+    const sourceDir = path.resolve("tiro-doxygen-embed");
+    const destDir = path.resolve(`public/${routes.apidocsFolder()}`);
+    const sourceFiles = await glob("**/*.{png,js}", {
+        cwd: sourceDir
+    });
+    const copy = async (file) => {
+        const sourceFile = path.join(sourceDir, file);
+        const destFile = path.join(destDir, file);
+        await mkdir(path.dirname(destFile), { recursive: true });
+        await copyFile(sourceFile, destFile);
+    };
+    await Promise.all(sourceFiles.map(copy));
+}
 
 exports.createPages = async ({ graphql, actions }) => {
     await createMdxDocs(graphql, actions);

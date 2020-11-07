@@ -3,7 +3,17 @@ import { Classes } from "@blueprintjs/core";
 import classNames from "classnames";
 import styles from "./DoxygenRenderer.module.scss";
 import { Container } from "./Container";
-import toH from "hast-to-hyperscript";
+import { LoadScript, ScriptId } from "./LoadScript";
+import { apidocsFile } from "@/routes";
+
+const jqueryScript = new ScriptId(
+    "doxygen-support-jquery",
+    apidocsFile("jquery.js")
+);
+const dynsectionsScript = new ScriptId(
+    "doxygen-support-dynsections",
+    apidocsFile("dynsections.js")
+);
 
 export interface DoxygenRendererProps {
     rawHtml: string;
@@ -14,6 +24,8 @@ export function DoxygenRenderer({
 }: DoxygenRendererProps): JSX.Element {
     return (
         <Container>
+            <LoadScript script={jqueryScript} />
+            <LoadScript script={dynsectionsScript} />
             <div
                 className={classNames(
                     Classes.RUNNING_TEXT,
