@@ -77,7 +77,7 @@ async function createMdxDocs(graphql, actions) {
     const { createPage } = actions;
     const result = await graphql(`
         query {
-            allFile(filter: { sourceInstanceName: { eq: "docs" } }) {
+            allFile(filter: { sourceInstanceName: { eq: "articles" } }) {
                 nodes {
                     childMdx {
                         id
@@ -143,8 +143,8 @@ async function createApiDocs(graphql, actions) {
     await Promise.all(doxygenFiles.data.allFile.nodes.map(createDoxgenPage));
 
     // Copy static resources needed by the doxygen pages.
-    const sourceDir = path.resolve("tiro-doxygen-embed");
-    const destDir = path.resolve(`public/${routes.apidocsFolder()}`);
+    const sourceDir = path.resolve("./docs/doxygen-embed");
+    const destDir = path.resolve(`./public/${routes.apidocsFolder()}`);
     const sourceFiles = await glob("**/*.{png,js}", {
         cwd: sourceDir
     });

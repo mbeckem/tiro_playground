@@ -16,15 +16,15 @@ module.exports = {
         {
             resolve: "gatsby-source-filesystem",
             options: {
-                name: "docs",
-                path: `${__dirname}/docs/`
+                name: "articles",
+                path: `${__dirname}/docs/articles`
             }
         },
         {
             resolve: "gatsby-source-filesystem",
             options: {
                 name: "doxygen-embed",
-                path: `${__dirname}/tiro-doxygen-embed`
+                path: `${__dirname}/docs/doxygen-embed`
             }
         },
         "gatsby-plugin-sharp",
@@ -41,7 +41,8 @@ module.exports = {
             options: {
                 aliases: {
                     "@": "src/",
-                    "@lib": "lib/"
+                    "@lib": "lib/",
+                    "@docs": "docs/"
                 }
             }
         },
