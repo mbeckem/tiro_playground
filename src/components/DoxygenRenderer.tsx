@@ -1,11 +1,13 @@
 import React from "react";
 import { Classes } from "@blueprintjs/core";
 import classNames from "classnames";
-import styles from "./DoxygenRenderer.module.scss";
 import { Container } from "./Container";
 import { LoadScript, ScriptId } from "./LoadScript";
 import { apidocsFile } from "@/routes";
 import { withPrefix } from "gatsby";
+
+// TODO: import styles from "./DoxygenRenderer.module.scss";
+import "@/styles/doxygen.scss";
 
 const jqueryScript = new ScriptId(
     "doxygen-support-jquery",
@@ -31,7 +33,7 @@ export function DoxygenRenderer({
                 className={classNames(
                     Classes.RUNNING_TEXT,
                     Classes.TEXT_LARGE,
-                    styles.doxygen
+                    "doxygen"
                 )}
                 dangerouslySetInnerHTML={{ __html: rawHtml }}
             />
