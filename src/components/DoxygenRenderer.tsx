@@ -6,7 +6,6 @@ import { LoadScript, ScriptId } from "./LoadScript";
 import { apidocsFile } from "@/routes";
 import { withPrefix } from "gatsby";
 
-// TODO: import styles from "./DoxygenRenderer.module.scss";
 import "@/styles/doxygen.scss";
 
 const jqueryScript = new ScriptId(

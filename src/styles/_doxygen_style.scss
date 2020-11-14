@@ -528,7 +528,8 @@ table.memberdecls {
 }
 
 div.memproto {
-    table.mlabels {
+    table.mlabels,
+    table.memname {
         td {
             box-shadow: none;
         }
