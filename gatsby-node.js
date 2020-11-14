@@ -33,6 +33,23 @@ const glob = require("fast-glob");
 
 const { readFile, copyFile, mkdir } = fs.promises;
 
+async function parseDoxygenHtml(filePath) {
+    const content = await readFile(filePath, { encoding: "utf-8" });
+    const lines = content.split(/\r?\n/);
+
+    // First line contains a comment that specifies the file title.
+    const first = lines.shift() || "";
+    const match = first.match(/^<!-- title=(.*) -->$/);
+    if (!match) {
+        throw new Error("Failed to find title comment in doxygen html.");
+    }
+
+    return {
+        title: match[1],
+        rawHtml: lines.join("\n")
+    };
+}
+
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     function getOutput() {
         switch (stage) {
@@ -128,14 +145,14 @@ async function createApiDocs(graphql, actions) {
     const createDoxgenPage = async (node) => {
         // TODO: Transport page title via html fragment (embed json or sth)
         const { relativePath, absolutePath } = node;
-        const { name, base } = path.posix.parse(relativePath);
-        const rawHtml = await readFile(absolutePath, { encoding: "utf-8" });
+        const { base } = path.posix.parse(relativePath);
+        const { title, rawHtml } = await parseDoxygenHtml(absolutePath);
 
         createPage({
             path: routes.apidocsFile(base),
             component: template,
             context: {
-                title: name,
+                title: title,
                 rawHtml: rawHtml
             }
         });

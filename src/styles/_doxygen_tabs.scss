@@ -1,9 +1,4 @@
-@use "~@blueprintjs/core/lib/scss/variables" as vars;
-
-$-border-color: vars.$dark-gray5;
-$-font-size: vars.$pt-font-size;
-$-font-size-small: vars.$pt-font-size-small;
-$-font-size-large: vars.$pt-font-size-large;
+@use "doxygen_vars" as vars;
 
 #top {
     margin-top: 2em;
@@ -14,27 +9,28 @@ $-font-size-large: vars.$pt-font-size-large;
         margin: 0;
         width: 100%;
         z-index: 101;
+        line-height: 140%;
 
-        border-left: 1px solid $-border-color;
-        border-right: 1px solid $-border-color;
-        border-bottom: 1px solid $-border-color;
+        border-left: 1px solid vars.$border-color;
+        border-right: 1px solid vars.$border-color;
+        border-bottom: 1px solid vars.$border-color;
 
         &:first-child {
-            border-top: 1px solid $-border-color;
+            border-top: 1px solid vars.$border-color;
         }
     }
 }
 
 .tabs1 {
-    font-size: $-font-size;
+    font-size: vars.$font-size;
 }
 
 .tabs2 {
-    font-size: $-font-size-small;
+    font-size: vars.$font-size-small;
 }
 
 .tabs3 {
-    font-size: $-font-size-small;
+    font-size: vars.$font-size-small;
 }
 
 .tablist {
@@ -52,7 +48,7 @@ $-font-size-large: vars.$pt-font-size-large;
         }
 
         a {
-            border-right: 1px solid $-border-color;
+            border-right: 1px solid vars.$border-color;
             display: block;
             margin: 8px 0;
             padding: 0 8px;
@@ -70,7 +66,7 @@ $-font-size-large: vars.$pt-font-size-large;
         flex-direction: row;
         flex-wrap: wrap;
 
-        font-size: $-font-size-small;
+        font-size: vars.$font-size-small;
         margin: 0px;
         padding: 0px;
 
@@ -87,16 +83,4 @@ $-font-size-large: vars.$pt-font-size-large;
             }
         }
     }
-}
-
-.navpath li.footer {
-    list-style-type: none;
-    float: right;
-    padding-left: 10px;
-    padding-right: 15px;
-    background-image: none;
-    background-repeat: no-repeat;
-    background-position: right;
-    color: #364d7c;
-    font-size: 8pt;
 }
