@@ -6,7 +6,11 @@ export interface SEOProps {
     description?: string;
     lang?: string;
     meta?: any[];
-    title: string;
+    title: string | string[];
+}
+
+function join(titleComponents: string[]) {
+    return titleComponents.join(" | ");
 }
 
 export const SEO = memo(function SEO({
@@ -29,6 +33,10 @@ export const SEO = memo(function SEO({
         `
     );
 
+    const titleArray = Array.isArray(title) ? title : [title];
+    const titleString = join(titleArray);
+    const fullTitleString = join([...titleArray, site.siteMetadata.title]);
+
     const metaDescription = description || site.siteMetadata.description;
 
     return (
@@ -36,8 +44,7 @@ export const SEO = memo(function SEO({
             htmlAttributes={{
                 lang
             }}
-            title={title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            title={fullTitleString}
             meta={[
                 {
                     name: "description",
@@ -45,7 +52,7 @@ export const SEO = memo(function SEO({
                 },
                 {
                     property: "og:title",
-                    content: title
+                    content: titleString
                 },
                 {
                     property: "og:description",
@@ -65,7 +72,7 @@ export const SEO = memo(function SEO({
                 },
                 {
                     name: `twitter:title`,
-                    content: title
+                    content: titleString
                 },
                 {
                     name: `twitter:description`,

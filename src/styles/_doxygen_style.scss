@@ -1,4 +1,5 @@
 /* Based on doxygen.css (Doxygen 1.18.20) */
+@use "doxygen_vars" as vars;
 
 .title {
     font-size: 1.5em;
@@ -15,7 +16,7 @@ h3.glow,
 h4.glow,
 h5.glow,
 h6.glow {
-    text-shadow: 0 0 15px cyan;
+    text-shadow: 0 0 15px vars.$glow-color;
 }
 
 dt {
@@ -97,6 +98,8 @@ a.el {
 a.elRef {
 }
 
+/* @group Source code formatting */
+
 .fragment {
     text-align: left;
     direction: ltr;
@@ -155,8 +158,8 @@ div.line {
     }
 
     &.glow {
-        background-color: cyan;
-        box-shadow: 0 0 10px cyan;
+        background-color: vars.$glow-color;
+        box-shadow: 0 0 10px vars.$glow-color;
     }
 }
 
@@ -181,6 +184,8 @@ span.lineno {
         }
     }
 }
+
+/* @end */
 
 div,
 span {
@@ -233,12 +238,8 @@ div.groupheader {
 }
 
 div.groupText {
-    margin-left: 16px;
+    margin-left: 1em;
     font-style: italic;
-}
-
-div.contents {
-    margin-left: 0.25em;
 }
 
 td.indexkey {
@@ -401,8 +402,8 @@ table.memberdecls {
 
 .memberdecls td.glow,
 .fieldtable tr.glow {
-    background-color: cyan;
-    box-shadow: 0 0 15px cyan;
+    background-color: vars.$glow-color;
+    box-shadow: 0 0 15px vars.$glow-color;
 }
 
 .mdescLeft,
@@ -510,7 +511,7 @@ table.memberdecls {
     width: 100%;
 
     &.glow {
-        box-shadow: 0 0 15px cyan;
+        box-shadow: 0 0 15px vars.$glow-color;
     }
 }
 
@@ -687,61 +688,53 @@ div.directory {
     border-top: 1px solid #9cafd4;
     border-bottom: 1px solid #9cafd4;
     width: 100%;
-}
 
-.directory table {
-    border-collapse: collapse;
-}
+    table {
+        border-collapse: collapse;
+    }
 
-.directory td {
-    margin: 0px;
-    padding: 0px;
-    vertical-align: top;
-}
+    td {
+        margin: 0px;
+        padding: 0px;
+        vertical-align: top;
+    }
 
-.directory td.entry {
-    white-space: nowrap;
-    padding-right: 6px;
-    padding-top: 3px;
-}
+    td.entry {
+        white-space: nowrap;
+        padding-right: 6px;
+        padding-top: 3px;
+    }
 
-.directory td.entry a {
-    outline: none;
-}
+    td.desc {
+        width: 100%;
+        padding-left: 6px;
+        padding-right: 6px;
+        padding-top: 3px;
+        border-left: 1px solid rgba(0, 0, 0, 0.05);
+    }
 
-.directory td.entry a img {
-    border: none;
-}
+    tr.even {
+        padding-left: 6px;
+        background-color: #f7f8fb;
+    }
 
-.directory td.desc {
-    width: 100%;
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-top: 3px;
-    border-left: 1px solid rgba(0, 0, 0, 0.05);
-}
+    img {
+        vertical-align: -30%;
+    }
 
-.directory tr.even {
-    padding-left: 6px;
-    background-color: #f7f8fb;
-}
+    .levels {
+        white-space: nowrap;
+        width: 100%;
+        text-align: right;
+        font-size: 9pt;
 
-.directory img {
-    vertical-align: -30%;
-}
-
-.directory .levels {
-    white-space: nowrap;
-    width: 100%;
-    text-align: right;
-    font-size: 9pt;
-}
-
-.directory .levels span {
-    cursor: pointer;
-    padding-left: 2px;
-    padding-right: 2px;
-    color: #3d578c;
+        span {
+            cursor: pointer;
+            padding-left: 2px;
+            padding-right: 2px;
+            color: #3d578c;
+        }
+    }
 }
 
 .arrow {
@@ -754,6 +747,7 @@ div.directory {
     cursor: pointer;
     font-size: 80%;
     display: inline-block;
+    vertical-align: middle;
     width: 16px;
     height: 22px;
 }
@@ -781,33 +775,30 @@ div.directory {
 .iconfopen {
     width: 24px;
     height: 18px;
-    margin-bottom: 4px;
     background-image: url("../../docs/doxygen-embed/folderopen.png");
     background-position: 0px -4px;
     background-repeat: repeat-y;
-    vertical-align: top;
+    vertical-align: middle;
     display: inline-block;
 }
 
 .iconfclosed {
     width: 24px;
     height: 18px;
-    margin-bottom: 4px;
     background-image: url("../../docs/doxygen-embed/folderclosed.png");
     background-position: 0px -4px;
     background-repeat: repeat-y;
-    vertical-align: top;
+    vertical-align: middle;
     display: inline-block;
 }
 
 .icondoc {
     width: 24px;
     height: 18px;
-    margin-bottom: 4px;
     background-image: url("../../docs/doxygen-embed/doc.png");
     background-position: 0px -4px;
     background-repeat: repeat-y;
-    vertical-align: top;
+    vertical-align: middle;
     display: inline-block;
 }
 
@@ -868,59 +859,58 @@ table.fieldtable {
     -moz-box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2px;
     -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
-}
 
-.fieldtable td,
-.fieldtable th {
-    padding: 3px 7px 2px;
-}
+    td,
+    th {
+        padding: 3px 7px 2px;
+    }
 
-.fieldtable td.fieldtype,
-.fieldtable td.fieldname {
-    white-space: nowrap;
-    border-right: 1px solid #a8b8d9;
-    border-bottom: 1px solid #a8b8d9;
-    vertical-align: top;
-}
+    th {
+        background-image: url("../../docs/doxygen-embed/nav_f.png");
+        background-repeat: repeat-x;
+        background-color: #e2e8f2;
+        font-size: 90%;
+        color: #253555;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+        font-weight: 400;
+        -moz-border-radius-topleft: 4px;
+        -moz-border-radius-topright: 4px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom: 1px solid #a8b8d9;
+    }
 
-.fieldtable td.fieldname {
-    padding-top: 3px;
-}
+    tr:last-child td {
+        border-bottom: none;
+    }
 
-.fieldtable td.fielddoc {
-    border-bottom: 1px solid #a8b8d9;
-    /*width: 100%;*/
-}
+    td.fieldtype,
+    td.fieldname {
+        white-space: nowrap;
+        border-right: 1px solid #a8b8d9;
+        border-bottom: 1px solid #a8b8d9;
+        vertical-align: top;
+    }
 
-.fieldtable td.fielddoc p:first-child {
-    margin-top: 0px;
-}
+    td.fieldname {
+        padding-top: 3px;
+    }
 
-.fieldtable td.fielddoc p:last-child {
-    margin-bottom: 2px;
-}
+    td.fielddoc {
+        border-bottom: 1px solid #a8b8d9;
 
-.fieldtable tr:last-child td {
-    border-bottom: none;
-}
+        p:first-child {
+            margin-top: 0px;
+        }
 
-.fieldtable th {
-    background-image: url("../../docs/doxygen-embed/nav_f.png");
-    background-repeat: repeat-x;
-    background-color: #e2e8f2;
-    font-size: 90%;
-    color: #253555;
-    padding-bottom: 4px;
-    padding-top: 5px;
-    text-align: left;
-    font-weight: 400;
-    -moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom: 1px solid #a8b8d9;
+        p:last-child {
+            margin-bottom: 2px;
+        }
+    }
 }
 
 .tabsearch {
@@ -967,15 +957,8 @@ div.ingroups a {
 }
 
 div.header {
-    background-image: url("../../docs/doxygen-embed/nav_h.png");
-    background-repeat: repeat-x;
-    background-color: #f9fafc;
-    margin: 0px;
-    border-bottom: 1px solid #c4cfe5;
-}
-
-div.headertitle {
-    padding: 5px 5px 5px 10px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .PageDocRTL-title div.headertitle {
