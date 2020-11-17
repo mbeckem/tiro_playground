@@ -25,3 +25,8 @@ export function apidocsFile(filename = "index.html"): string {
 export function docsArticle(id: string): string {
     return `/docs/${id}`;
 }
+
+export const LibTiro = {
+    gettingStarted: () => docsArticle("libtiro/getting-started"),
+    embeddersGuide: () => docsArticle("libtiro/embedders-guide")
+} as const;

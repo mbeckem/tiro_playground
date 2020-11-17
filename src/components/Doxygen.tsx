@@ -2,9 +2,10 @@ import React from "react";
 import { LoadScript, ScriptId } from "./LoadScript";
 import { apidocsFile } from "@/routes";
 import { withPrefix } from "gatsby";
+import { Classes } from "@blueprintjs/core";
+import classNames from "classnames";
 
 import "@/styles/doxygen.scss";
-import { Article } from "./Article";
 
 const jqueryScript = new ScriptId(
     "doxygen-support-jquery",
@@ -24,9 +25,14 @@ export function Doxygen({ rawHtml }: DoxygenProps): JSX.Element {
         <>
             <LoadScript script={jqueryScript} />
             <LoadScript script={dynsectionsScript} />
-            <Article className="doxygen">
-                <div dangerouslySetInnerHTML={{ __html: rawHtml }} />
-            </Article>
+            <div
+                className={classNames(
+                    Classes.RUNNING_TEXT,
+                    Classes.TEXT_LARGE,
+                    "doxygen"
+                )}
+                dangerouslySetInnerHTML={{ __html: rawHtml }}
+            />
         </>
     );
 }

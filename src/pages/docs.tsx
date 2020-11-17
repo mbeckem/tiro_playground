@@ -18,8 +18,16 @@ export default function IndexPage(): JSX.Element {
                     <h2>libtiro</h2>
                     Documentation for the native C and C++ library.
                     <ul>
-                        <li>Getting started (TODO)</li>
-                        <li>Embedder&apos;s Guide (TODO)</li>
+                        <li>
+                            <Link to={routes.LibTiro.gettingStarted()}>
+                                Getting started
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={routes.LibTiro.embeddersGuide()}>
+                                Embedder&apos;s Guide
+                            </Link>
+                        </li>
                         <li>
                             <Link to={routes.apidocsFile()}>API Reference</Link>
                         </li>
