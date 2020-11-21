@@ -1,10 +1,14 @@
 .header {
+    font-size: 16px;
+
     .title {
-        font-size: 1.25em;
+        font-size: 20px;
         font-weight: bold;
     }
 
     a.pageLink {
+        display: flex;
+        align-items: center;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
 
@@ -20,6 +24,14 @@
 
         &:hover {
             filter: brightness(85%);
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            margin-right: 4px;
+
+            fill: currentColor;
         }
     }
 }

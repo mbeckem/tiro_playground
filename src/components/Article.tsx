@@ -9,7 +9,7 @@ export interface ArticleProps {
 
 export const Article: React.FC<ArticleProps> = ({ className, children }) => {
     return (
-        <div
+        <article
             className={classNames(
                 Classes.RUNNING_TEXT,
                 Classes.TEXT_LARGE,
@@ -18,6 +18,6 @@ export const Article: React.FC<ArticleProps> = ({ className, children }) => {
             )}
         >
             {children}
-        </div>
+        </article>
     );
 };

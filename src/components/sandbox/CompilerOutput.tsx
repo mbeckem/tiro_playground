@@ -1,8 +1,8 @@
 import React, { memo, ReactNode } from "react";
 import { Tabs, Tab, UL } from "@blueprintjs/core";
 
-import { CompilationResult } from "@/runtime";
-import { defined } from "@/utils";
+import { CompilationResult } from "@src/runtime";
+import { defined } from "@src/utils";
 import styles from "./CompilerOutput.module.scss";
 
 function statusMessage(props: CompilerOutputProps): ReactNode {

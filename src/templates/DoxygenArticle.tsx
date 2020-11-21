@@ -1,9 +1,9 @@
 import React from "react";
 import { PageProps } from "gatsby";
-import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
-import { Doxygen } from "@/components/Doxygen";
-import { Container } from "@/components/Container";
+import { Layout } from "@src/components/Layout";
+import { SEO } from "@src/components/SEO";
+import { Doxygen } from "@src/components/Doxygen";
+import { Container } from "@src/components/Container";
 
 interface ApiDocData {
     title: string;

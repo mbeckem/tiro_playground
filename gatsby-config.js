@@ -13,6 +13,14 @@ module.exports = {
         "gatsby-plugin-react-helmet",
         "gatsby-transformer-sharp",
         {
+            resolve: "gatsby-plugin-react-svg",
+            options: {
+                rule: {
+                    include: /\.inline\.svg$/
+                }
+            }
+        },
+        {
             resolve: "gatsby-plugin-mdx"
         },
         {
@@ -42,7 +50,8 @@ module.exports = {
             resolve: "gatsby-alias-imports",
             options: {
                 aliases: {
-                    "@": "src/",
+                    "@src": "src/",
+                    "@assets": "assets/",
                     "@lib": "lib/",
                     "@docs": "docs/"
                 }

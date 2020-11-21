@@ -1,11 +1,11 @@
 import React from "react";
-import { LoadScript, ScriptId } from "./LoadScript";
-import { apidocsFile } from "@/routes";
 import { withPrefix } from "gatsby";
 import { Classes } from "@blueprintjs/core";
 import classNames from "classnames";
+import { LoadScript, ScriptId } from "./LoadScript";
+import { apidocsFile } from "@src/routes";
 
-import "@/styles/doxygen.scss";
+import "@src/styles/doxygen.scss";
 
 const jqueryScript = new ScriptId(
     "doxygen-support-jquery",

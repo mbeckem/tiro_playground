@@ -1,23 +1,13 @@
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
-import { Layout } from "@/components/Layout";
-import { CodeBlock } from "@/components/CodeBlock";
-import { SEO } from "@/components/SEO";
-import { Container } from "@/components/Container";
-import { Article } from "@/components/Article";
-import { ExternalLink } from "@/components/ExternalLink";
-
-const AutoLink: React.FC<any> = (props) => {
-    const to: string = props.href;
-    if (to.startsWith("/") || to.startsWith("."))
-        return <Link to={to} {...props} />;
-
-    if (to.startsWith("#")) return <a {...props} />;
-
-    return <ExternalLink to={to} {...props} />;
-};
+import { Layout } from "@src/components/Layout";
+import { CodeBlock } from "@src/components/CodeBlock";
+import { SEO } from "@src/components/SEO";
+import { Container } from "@src/components/Container";
+import { Article } from "@src/components/Article";
+import { AutoLink } from "@src/components/AutoLink";
 
 const shortcodes = {
     a: AutoLink,

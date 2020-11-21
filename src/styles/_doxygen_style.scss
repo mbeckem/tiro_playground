@@ -130,7 +130,7 @@ div.fragment {
 div.line {
     font-family: monospace, fixed;
     font-size: 1em;
-    line-height: 1.1em;
+    line-height: 1em;
     text-wrap: unrestricted;
     white-space: -moz-pre-wrap; /* Moz */
     white-space: -pre-wrap; /* Opera 4-6 */
@@ -139,7 +139,8 @@ div.line {
     word-wrap: break-word; /* IE 5.5+ */
     text-indent: -53px;
     padding-left: 53px;
-    padding-bottom: 0px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     margin: 0px;
     -webkit-transition-property: background-color, box-shadow;
     -webkit-transition-duration: 0.5s;

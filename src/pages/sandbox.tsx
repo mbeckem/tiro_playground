@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 
-import { Layout } from "@/components/Layout";
-import { SEO } from "@/components/SEO";
+import { Layout } from "@src/components/Layout";
+import { SEO } from "@src/components/SEO";
 
 const INITIAL_SOURCE = `
 import std;
@@ -15,7 +15,7 @@ export func main() {
 const LazyPlayground: any = lazy(async () => {
     return {
         // React.lazy needs us to return a "default" export.
-        default: (await import("@/components/sandbox")).Sandbox
+        default: (await import("@src/components/sandbox")).Sandbox
     };
 });
 

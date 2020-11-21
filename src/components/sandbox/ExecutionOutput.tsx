@@ -1,7 +1,7 @@
 import React, { memo, useRef, useEffect } from "react";
 import { List } from "immutable";
 
-import { ExecutionResult } from "@/runtime";
+import { ExecutionResult } from "@src/runtime";
 import { Button, ButtonGroup } from "@blueprintjs/core";
 import styles from "./ExecutionOutput.module.scss";
 

@@ -6,8 +6,8 @@ import {
     Runtime,
     createRuntime,
     ExecutionResult
-} from "@/runtime";
-import { defined } from "@/utils";
+} from "@src/runtime";
+import { defined } from "@src/utils";
 import { SandboxUI } from "./SandboxUI";
 import { CompilerOutputProps } from "./CompilerOutput";
 import { ExecutionOutputProps } from "./ExecutionOutput";

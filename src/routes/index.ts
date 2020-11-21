@@ -18,8 +18,12 @@ export function apidocsFolder(): string {
     return "/docs/api";
 }
 
-export function apidocsFile(filename = "index.html"): string {
+export function apidocsFile(filename: string): string {
     return `${apidocsFolder()}/${filename}`;
+}
+
+export function apidocsIndex(): string {
+    return apidocsFile("index.html");
 }
 
 export function docsArticle(id: string): string {
