@@ -41,18 +41,15 @@ function statusContent(props: CompilerOutputProps): JSX.Element {
     );
 }
 
-function astContent(ast: string | undefined): JSX.Element | undefined {
-    return ast ? <pre>{ast}</pre> : undefined;
-}
+function preformatted(title: string, content: string | undefined): JSX.Element {
+    const item = content ? <pre>{content}</pre> : undefined;
 
-function irContent(ir: string | undefined): JSX.Element | undefined {
-    return ir ? <pre>{ir}</pre> : undefined;
-}
-
-function bytecodeContent(
-    bytecode: string | undefined
-): JSX.Element | undefined {
-    return bytecode ? <pre>{bytecode}</pre> : undefined;
+    return (
+        <>
+            <h3>{title}</h3>
+            {item}
+        </>
+    );
 }
 
 function makeTab(
@@ -89,19 +86,27 @@ export const CompilerOutput = memo(function CompilerOutput(
             content: statusContent(props)
         },
         {
+            id: "cst",
+            title: "CST",
+            content: preformatted("Concrete Syntax Tree", result?.cst.trim())
+        },
+        {
             id: "ast",
-            title: "Abstract Syntax Tree",
-            content: astContent(result?.ast.trim())
+            title: "AST",
+            content: preformatted("Abstract Syntax Tree", result?.ast.trim())
         },
         {
             id: "ir",
-            title: "Intermediate Repr.",
-            content: irContent(result?.ir.trim())
+            title: "IR",
+            content: preformatted(
+                "Intermediate Representation",
+                result?.ir.trim()
+            )
         },
         {
             id: "bytecode",
             title: "Bytecode",
-            content: bytecodeContent(result?.bytecode.trim())
+            content: preformatted("Compiled bytecode", result?.bytecode.trim())
         }
     ];
 

@@ -16,7 +16,10 @@ export interface CompilationResult {
     // True if the compilation was successful.
     success: boolean;
 
-    // String representation of the AST.
+    // String representation of the concrete syntax tree.
+    cst: string;
+
+    // String representation of the abstract syntax tree.
     ast: string;
 
     // String representation of the SSA IR.
